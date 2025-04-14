@@ -1,5 +1,6 @@
 package com.biblioteca.entities;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,15 @@ public class Utente {
     @Column(name = "role", nullable = false)
     private Ruoli ruolo;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at", nullable = true)
+    private Date updatedAt;
+
+    @Column(name = "deleted_at", nullable = true)
+    private Date deletedAt;
+
     @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
     private List<Prestito> prestiti = new ArrayList<>();
 
@@ -55,12 +65,25 @@ public class Utente {
     }
 
     @PrePersist
-    @PreUpdate
     public void encryptPassword() {
         if (this.password != null && !this.password.startsWith("$2a$")) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             this.password = passwordEncoder.encode(this.password);
         }
+
+        if (createdAt == null) {
+            createdAt = new Date(System.currentTimeMillis());
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if (this.password != null && !this.password.startsWith("$2a$")) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            this.password = passwordEncoder.encode(this.password);
+        }
+
+        updatedAt = new Date(System.currentTimeMillis());
     }
 
     public Long getId() {
@@ -91,6 +114,11 @@ public class Utente {
         return password;
     }
 
+    public Boolean comparePassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(password, this.password);
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -101,6 +129,30 @@ public class Utente {
 
     public void setRuolo(Ruoli ruolo) {
         this.ruolo = ruolo;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     @Override
