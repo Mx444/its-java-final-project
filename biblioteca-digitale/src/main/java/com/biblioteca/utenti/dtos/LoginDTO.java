@@ -1,13 +1,13 @@
-package com.biblioteca.utenti.controllers.dtos;
+package com.biblioteca.utenti.dtos;
 
-public class AuthRequest {
+public class LoginDTO {
     public String email;
     public String password;
 
-    public AuthRequest() {
+    public LoginDTO() {
     }
 
-    public AuthRequest(String email, String password) {
+    public LoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

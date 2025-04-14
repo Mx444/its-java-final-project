@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.biblioteca.prestiti.entities.Prestito;
 import com.biblioteca.utenti.entities.enums.Ruoli;
 
 @Entity
@@ -40,7 +41,7 @@ public class Utente {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Ruoli ruolo;
+    private Ruoli ruolo = Ruoli.ROLE_USER;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;

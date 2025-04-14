@@ -1,4 +1,4 @@
-package com.biblioteca.utenti.entities;
+package com.biblioteca.prestiti.entities;
 
 import java.sql.Date;
 
@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.biblioteca.libri.entities.Libro;
+import com.biblioteca.utenti.entities.Utente;
 
 @Entity
 @Table(name = "loans")
