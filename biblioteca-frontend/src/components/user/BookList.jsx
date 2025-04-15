@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect} from 'react';
 import { 
   Container, Typography, Box, Paper, InputBase, IconButton, 
   Table, TableBody, TableCell, TableContainer, TableHead, 
-  TableRow, Button, Chip, CircularProgress, Alert, Divider,
-  Tooltip
+  TableRow, Button, Chip, CircularProgress, Alert, 
+
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import BookIcon from '@mui/icons-material/Book';
@@ -14,7 +14,6 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import PersonIcon from '@mui/icons-material/Person';
 import userService from '../../services/user.service';
 import BorrowBookDialog from './BorrowBookDialog';
-import { AuthContext } from '../../context/AuthContext';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -26,7 +25,6 @@ const BookList = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [userBorrowedBooks, setUserBorrowedBooks] = useState([]);
-  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     fetchBooks();
