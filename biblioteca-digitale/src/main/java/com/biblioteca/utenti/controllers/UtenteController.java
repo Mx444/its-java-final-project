@@ -3,7 +3,7 @@ package com.biblioteca.utenti.controllers;
 import com.biblioteca.libri.entities.Libro;
 import com.biblioteca.prestiti.dtos.PrestitoDTO;
 import com.biblioteca.utenti.dtos.ResponseDTO;
-import com.biblioteca.utenti.providers.BibliotecaUtenteService;
+import com.biblioteca.utenti.providers.UtenteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,28 +12,28 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
-public class BibliotecaUtenteController {
+public class UtenteController {
 
     @Autowired
-    private BibliotecaUtenteService bibliotecaUtenteService;
+    private UtenteService utenteService;
 
     @GetMapping("/libri")
     public List<Libro> getAllLibri() {
-        return bibliotecaUtenteService.getAllLibri();
+        return utenteService.getAllLibri();
     }
 
     @PostMapping("/prestiti")
     public ResponseDTO creaPrestito(@RequestBody Long idLibro) {
-        return bibliotecaUtenteService.creaPrestito(idLibro);
+        return utenteService.creaPrestito(idLibro);
     }
 
     @PostMapping("/restituisci/{id}")
     public ResponseDTO restituisciLibro(@PathVariable Long id) {
-        return bibliotecaUtenteService.restituisciLibro(id);
+        return utenteService.restituisciLibro(id);
     }
 
     @GetMapping("/miei-prestiti")
     public List<PrestitoDTO> getMieiPrestiti() {
-        return bibliotecaUtenteService.getMieiPrestiti();
+        return utenteService.getMieiPrestiti();
     }
 }

@@ -14,4 +14,6 @@ public interface PrestitoRepository extends JpaRepository<Prestito, Long> {
     List<Prestito> findByUtenteId(Long utenteId);
 
     Optional<Prestito> findByUtenteIdAndLibroIdAndRestituitoFalse(Long utenteId, Long libroId);
+
+    boolean existsByLibroIdAndRestituitoFalse(Long libroId);
 }

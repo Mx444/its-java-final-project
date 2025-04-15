@@ -17,4 +17,6 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
     List<Libro> findByAutoreContainingIgnoreCase(String autore);
 
     List<Libro> findByPrestiti(Prestito prestito);
+
+    boolean existsByTitoloAndAutore(String titolo, String autore);
 }

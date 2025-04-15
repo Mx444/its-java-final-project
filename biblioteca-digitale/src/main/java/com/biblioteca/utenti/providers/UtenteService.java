@@ -24,8 +24,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class BibliotecaUtenteService {
-    private static final Logger logger = LoggerFactory.getLogger(BibliotecaUtenteService.class);
+public class UtenteService {
+    private static final Logger logger = LoggerFactory.getLogger(UtenteService.class);
 
     @Autowired
     private LibroRepository libroRepository;
@@ -43,89 +43,80 @@ public class BibliotecaUtenteService {
 
     @Transactional
     public ResponseDTO creaPrestito(Long idLibro) {
+        if (idLibro == null)
+            return new ResponseDTO(false, "ID libro non valido");
         Utente utenteCorrente = getUtenteCorrente();
-        if (utenteCorrente == null) {
+        if (utenteCorrente == null)
             return new ResponseDTO(false, "Utente non autenticato");
-        }
-
         Optional<Libro> libroOpt = libroRepository.findById(idLibro);
-        if (libroOpt.isEmpty()) {
+        if (libroOpt.isEmpty())
             return new ResponseDTO(false, "Libro non trovato");
-        }
-
         Libro libro = libroOpt.get();
-
-        if (libro.getCopieDisponibili() <= 0) {
+        if (libro.getCopieDisponibili() <= 0)
             return new ResponseDTO(false, "Nessuna copia disponibile");
-        }
-
         boolean haGiaInPrestito = prestitoRepository.findByUtenteIdAndLibroIdAndRestituitoFalse(
                 utenteCorrente.getId(), libro.getId()).isPresent();
-
-        if (haGiaInPrestito) {
+        if (haGiaInPrestito)
             return new ResponseDTO(false, "Hai già questo libro in prestito");
+
+        try {
+            LocalDate oggi = LocalDate.now();
+            LocalDate scadenza = oggi.plusDays(30);
+            Prestito prestito = new Prestito();
+            prestito.setIdUtente(utenteCorrente);
+            prestito.setIdLibro(libro);
+            prestito.setDataInizio(Date.valueOf(oggi));
+            prestito.setDataFine(Date.valueOf(scadenza));
+            prestito.setRestituito(false);
+            libro.addPrestito(prestito);
+            libro.setCopieDisponibili(libro.getCopieDisponibili() - 1);
+            prestitoRepository.save(prestito);
+            logger.info("Creato prestito del libro '{}' per l'utente '{}'", libro.getTitolo(),
+                    utenteCorrente.getEmail());
+            return new ResponseDTO(true, "Prestito creato con successo");
+        } catch (Exception e) {
+            logger.error("Errore durante la creazione del prestito: {}", e.getMessage());
+            return new ResponseDTO(false, "Errore durante la creazione del prestito");
         }
-
-        LocalDate oggi = LocalDate.now();
-        LocalDate scadenza = oggi.plusDays(30);
-
-        Prestito prestito = new Prestito();
-        prestito.setIdUtente(utenteCorrente);
-        prestito.setIdLibro(libro);
-        prestito.setDataInizio(Date.valueOf(oggi));
-        prestito.setDataFine(Date.valueOf(scadenza));
-        prestito.setRestituito(false);
-
-        libro.addPrestito(prestito);
-
-        libro.setCopieDisponibili(libro.getCopieDisponibili() - 1);
-
-        prestitoRepository.save(prestito);
-
-        logger.info("Creato prestito del libro '{}' per l'utente '{}'", libro.getTitolo(), utenteCorrente.getEmail());
-        return new ResponseDTO(true, "Prestito creato con successo");
     }
 
     @Transactional
     public ResponseDTO restituisciLibro(Long idPrestito) {
+        if (idPrestito == null)
+            return new ResponseDTO(false, "ID prestito non valido");
         Utente utenteCorrente = getUtenteCorrente();
-        if (utenteCorrente == null) {
+        if (utenteCorrente == null)
             return new ResponseDTO(false, "Utente non autenticato");
-        }
-
         Optional<Prestito> prestitoOpt = prestitoRepository.findById(idPrestito);
-        if (prestitoOpt.isEmpty()) {
+        if (prestitoOpt.isEmpty())
             return new ResponseDTO(false, "Prestito non trovato");
-        }
-
         Prestito prestito = prestitoOpt.get();
-
         if (!prestito.getUtente().getId().equals(utenteCorrente.getId())) {
             logger.warn("Tentativo di restituire prestito non appartenente all'utente: {}", utenteCorrente.getEmail());
             return new ResponseDTO(false, "Non autorizzato a restituire questo prestito");
         }
-
-        if (prestito.getRestituito()) {
+        if (prestito.getRestituito())
             return new ResponseDTO(false, "Libro già restituito");
+
+        try {
+            prestito.setRestituito(true);
+            Libro libro = prestito.getLibro();
+            libro.setCopieDisponibili(libro.getCopieDisponibili() + 1);
+            prestitoRepository.save(prestito);
+            logger.info("Restituito libro '{}' dall'utente '{}'",
+                    libro.getTitolo(), utenteCorrente.getEmail());
+            return new ResponseDTO(true, "Libro restituito con successo");
+        } catch (Exception e) {
+            logger.error("Errore durante la restituzione del libro: {}", e.getMessage());
+            return new ResponseDTO(false, "Errore durante la restituzione del libro");
         }
-
-        prestito.setRestituito(true);
-        Libro libro = prestito.getLibro();
-        libro.setCopieDisponibili(libro.getCopieDisponibili() + 1);
-
-        prestitoRepository.save(prestito);
-
-        logger.info("Restituito libro '{}' dall'utente '{}'",
-                libro.getTitolo(), utenteCorrente.getEmail());
-        return new ResponseDTO(true, "Libro restituito con successo");
     }
 
     @Transactional(readOnly = true)
     public List<PrestitoDTO> getMieiPrestiti() {
         Utente utenteCorrente = getUtenteCorrente();
-        if (utenteCorrente == null) {
+        if (utenteCorrente == null)
             return List.of();
-        }
 
         List<Prestito> prestiti = prestitoRepository.findByUtenteId(utenteCorrente.getId());
         return prestiti.stream().map(prestito -> {
@@ -135,7 +126,6 @@ public class BibliotecaUtenteService {
             dto.setDataFine(prestito.getDataFine());
             dto.setRestituito(prestito.getRestituito());
 
-            // Map libro fields
             Libro libro = prestito.getLibro();
             PrestitoDTO.LibroDTO libroDTO = new PrestitoDTO.LibroDTO();
             libroDTO.setId(libro.getId());

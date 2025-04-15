@@ -36,7 +36,7 @@ public class Libro {
     private Date annoDiPubblicazione;
 
     @Column(name = "available_copies", nullable = false)
-    private int copieDisponibili;
+    private Integer copieDisponibili;
 
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL)
     private List<Prestito> prestiti = new ArrayList<>();
