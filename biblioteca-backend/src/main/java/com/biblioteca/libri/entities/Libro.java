@@ -33,7 +33,7 @@ public class Libro {
     private String genere;
 
     @Column(name = "publication_year", nullable = false)
-    private Date annoDiPubblicazione;
+    private Integer annoDiPubblicazione;
 
     @Column(name = "available_copies", nullable = false)
     private Integer copieDisponibili;
@@ -44,7 +44,7 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titolo, String autore, String genere, Date annoDiPubblicazione, int copieDisponibili) {
+    public Libro(String titolo, String autore, String genere, Integer annoDiPubblicazione, int copieDisponibili) {
         this.titolo = titolo;
         this.autore = autore;
         this.genere = genere;
@@ -84,11 +84,11 @@ public class Libro {
         this.genere = genere;
     }
 
-    public Date getAnnoDiPubblicazione() {
+    public Integer getAnnoDiPubblicazione() {
         return annoDiPubblicazione;
     }
 
-    public void setAnnoDiPubblicazione(Date annoDiPubblicazione) {
+    public void setAnnoDiPubblicazione(Integer annoDiPubblicazione) {
         this.annoDiPubblicazione = annoDiPubblicazione;
     }
 

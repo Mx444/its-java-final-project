@@ -46,6 +46,11 @@ public class AdminService {
 
     @Transactional
     public ResponseDTO modificaLibro(Long id, Libro libroModificato) {
+        if (id == null || libroModificato.getTitolo() == null || libroModificato.getAutore() == null
+                || libroModificato.getGenere() == null || libroModificato.getAnnoDiPubblicazione() == null
+                || libroModificato.getCopieDisponibili() <= 0) {
+            return new ResponseDTO(false, "Dati libro non validi");
+        }
         try {
             Optional<Libro> libroOpt = libroRepository.findById(id);
             if (libroOpt.isEmpty()) {
@@ -56,6 +61,8 @@ public class AdminService {
             libro.setTitolo(libroModificato.getTitolo());
             libro.setAutore(libroModificato.getAutore());
             libro.setGenere(libroModificato.getGenere());
+            libro.setAnnoDiPubblicazione(libroModificato.getAnnoDiPubblicazione());
+            libro.setCopieDisponibili(libroModificato.getCopieDisponibili());
 
             libroRepository.save(libro);
             return new ResponseDTO(true, "Libro modificato con successo");

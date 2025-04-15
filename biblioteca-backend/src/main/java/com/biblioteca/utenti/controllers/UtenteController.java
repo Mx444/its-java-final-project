@@ -25,7 +25,7 @@ public class UtenteController {
 
     @PostMapping("/prestiti")
     public ResponseDTO creaPrestito(@RequestBody PrestitoRequestDTO idLibro) {
-        return utenteService.creaPrestito(idLibro.getBookId());
+        return utenteService.creaPrestito(idLibro.getIdLibro());
     }
 
     @PostMapping("/restituisci/{id}")

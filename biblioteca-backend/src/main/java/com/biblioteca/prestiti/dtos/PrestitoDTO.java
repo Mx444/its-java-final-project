@@ -5,6 +5,7 @@ import java.sql.Date;
 public class PrestitoDTO {
     private Long id;
     private Date dataInizio;
+    private Date dataRestituzione;
     private Date dataFine;
     private Boolean restituito;
     private LibroDTO libro;
@@ -62,6 +63,14 @@ public class PrestitoDTO {
 
     public void setDataInizio(Date dataInizio) {
         this.dataInizio = dataInizio;
+    }
+
+    public Date getDataRestituzione() {
+        return dataRestituzione;
+    }
+
+    public void setDataRestituzione(Date dataRestituzione) {
+        this.dataRestituzione = dataRestituzione;
     }
 
     public Date getDataFine() {

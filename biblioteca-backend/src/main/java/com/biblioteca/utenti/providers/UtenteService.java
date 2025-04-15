@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -58,25 +59,25 @@ public class UtenteService {
                 utenteCorrente.getId(), libro.getId()).isPresent();
         if (haGiaInPrestito)
             return new ResponseDTO(false, "Hai già questo libro in prestito");
-
+        LocalDate oggi = LocalDate.now();
+        LocalDate scadenza = oggi.plusDays(30);
+        Prestito prestito = new Prestito();
+        prestito.setIdUtente(utenteCorrente);
+        prestito.setIdLibro(libro);
+        prestito.setDataInizio(Date.valueOf(oggi));
+        prestito.setDataFine(Date.valueOf(scadenza));
+        prestito.setRestituito(false);
+        libro.addPrestito(prestito);
+        libro.setCopieDisponibili(libro.getCopieDisponibili() - 1);
         try {
-            LocalDate oggi = LocalDate.now();
-            LocalDate scadenza = oggi.plusDays(30);
-            Prestito prestito = new Prestito();
-            prestito.setIdUtente(utenteCorrente);
-            prestito.setIdLibro(libro);
-            prestito.setDataInizio(Date.valueOf(oggi));
-            prestito.setDataFine(Date.valueOf(scadenza));
-            prestito.setRestituito(false);
-            libro.addPrestito(prestito);
-            libro.setCopieDisponibili(libro.getCopieDisponibili() - 1);
             prestitoRepository.save(prestito);
             logger.info("Creato prestito del libro '{}' per l'utente '{}'", libro.getTitolo(),
                     utenteCorrente.getEmail());
             return new ResponseDTO(true, "Prestito creato con successo");
         } catch (Exception e) {
-            logger.error("Errore durante la creazione del prestito: {}", e.getMessage());
-            return new ResponseDTO(false, "Errore durante la creazione del prestito");
+            logger.error("Errore durante la creazione del prestito: {}", e.getMessage(), e);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return new ResponseDTO(false, "Errore durante la creazione del prestito: " + e.getMessage());
         }
     }
 
@@ -97,11 +98,11 @@ public class UtenteService {
         }
         if (prestito.getRestituito())
             return new ResponseDTO(false, "Libro già restituito");
-
+        prestito.setRestituito(true);
+        prestito.setDataRestituzione(Date.valueOf(LocalDate.now()));
+        Libro libro = prestito.getLibro();
+        libro.setCopieDisponibili(libro.getCopieDisponibili() + 1);
         try {
-            prestito.setRestituito(true);
-            Libro libro = prestito.getLibro();
-            libro.setCopieDisponibili(libro.getCopieDisponibili() + 1);
             prestitoRepository.save(prestito);
             logger.info("Restituito libro '{}' dall'utente '{}'",
                     libro.getTitolo(), utenteCorrente.getEmail());
@@ -123,6 +124,7 @@ public class UtenteService {
             PrestitoDTO dto = new PrestitoDTO();
             dto.setId(prestito.getId());
             dto.setDataInizio(prestito.getDataInizio());
+            dto.setDataRestituzione(prestito.getDataRestituzione());
             dto.setDataFine(prestito.getDataFine());
             dto.setRestituito(prestito.getRestituito());
 

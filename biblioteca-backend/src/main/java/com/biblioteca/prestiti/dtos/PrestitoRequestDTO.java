@@ -1,13 +1,13 @@
 package com.biblioteca.prestiti.dtos;
 
 public class PrestitoRequestDTO {
-    private Long bookId;
+    private Long idLibro;
 
-    public Long getBookId() {
-        return bookId;
+    public Long getIdLibro() {
+        return idLibro;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setidLibro(Long idLibro) {
+        this.idLibro = idLibro;
     }
 }

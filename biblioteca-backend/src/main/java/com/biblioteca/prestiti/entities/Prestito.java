@@ -36,6 +36,9 @@ public class Prestito {
     @Column(nullable = false)
     private Date dataInizio;
 
+    @Column(nullable = true)
+    private Date dataRestituzione = null;
+
     @Column(nullable = false)
     private Date dataFine;
 
@@ -45,7 +48,8 @@ public class Prestito {
     public Prestito() {
     }
 
-    public Prestito(Utente utente, Libro libro, Date dataInizio, Date dataFine, boolean restituito) {
+    public Prestito(Utente utente, Libro libro, Date dataInizio, Date dataFine,
+            boolean restituito) {
         this.utente = utente;
         this.libro = libro;
         this.dataInizio = dataInizio;
@@ -79,6 +83,14 @@ public class Prestito {
 
     public Date getDataInizio() {
         return dataInizio;
+    }
+
+    public Date getDataRestituzione() {
+        return dataRestituzione;
+    }
+
+    public void setDataRestituzione(Date dataRestituzione) {
+        this.dataRestituzione = dataRestituzione;
     }
 
     public void setDataInizio(Date dataInizio) {
