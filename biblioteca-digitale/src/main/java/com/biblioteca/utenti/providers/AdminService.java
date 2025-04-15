@@ -101,6 +101,12 @@ public class AdminService {
             libroDTO.setGenere(libro.getGenere());
             dto.setLibro(libroDTO);
 
+            PrestitoDTO.UtenteDTO utenteDTO = new PrestitoDTO.UtenteDTO();
+            utenteDTO.setId(prestito.getUtente().getId());
+            utenteDTO.setNome(prestito.getUtente().getNome());
+            utenteDTO.setEmail(prestito.getUtente().getEmail());
+            dto.setUtente(utenteDTO);
+
             return dto;
         }).collect(Collectors.toList());
     }
