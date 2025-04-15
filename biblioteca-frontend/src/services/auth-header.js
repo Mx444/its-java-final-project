@@ -1,9 +1,14 @@
 export default function authHeader() {
-    const token = JSON.parse(localStorage.getItem('token'));
+  try {
+    const token = localStorage.getItem('token');
   
     if (token) {
-      return { Authorization: `Bearer ${token}` };
-    } else {
-      return {};
+      const tokenStr = typeof token === 'string' ? token.replace(/"/g, '') : token;
+      return { Authorization: `Bearer ${tokenStr}` };
     }
+  } catch (error) {
+    console.error("Errore nella generazione dell'header di autenticazione:", error);
   }
+  
+  return {};
+}

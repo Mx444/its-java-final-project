@@ -1,19 +1,19 @@
-// src/App.js
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 import Login from './components/auth/Login';
 import BookList from './components/user/BookList';
 import LoansList from './components/user/LoansList';
 import AdminBookList from './components/admin/AdminBookList';
 import AllLoans from './components/admin/AllLoans';
-import ReportPage from './components/admin/ReportPage';
-import ProtectedRoute from './components/layout/ProtectedRoute';
 import RegisterUser from './components/admin/RegisterUser';
+import ReportPage from './components/admin/ReportPage';
+import Unauthorized from './components/auth/Unauthorized';
 
 const theme = createTheme({
   palette: {
@@ -28,38 +28,25 @@ const theme = createTheme({
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
+    <Router>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           <Navbar />
           <Routes>
+            {/* Rotte pubbliche */}
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Navigate to="/books" />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
             
-            {/* User Routes */}
-            <Route 
-              path="/books" 
-              element={
-                <ProtectedRoute>
-                  <BookList />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/my-loans" 
-              element={
-                <ProtectedRoute>
-                  <LoansList />
-                </ProtectedRoute>
-              } 
-            />
+            {/* Rotte utente */}
+            <Route path="/books" element={<ProtectedRoute><BookList /></ProtectedRoute>} />
+            <Route path="/my-loans" element={<ProtectedRoute><LoansList /></ProtectedRoute>} />
             
-            {/* Admin Routes */}
+            {/* Rotte amministrative */}
             <Route 
               path="/admin/books" 
               element={
-                <ProtectedRoute adminOnly={true}>
+                <ProtectedRoute requireAdmin={true}>
                   <AdminBookList />
                 </ProtectedRoute>
               } 
@@ -67,32 +54,36 @@ function App() {
             <Route 
               path="/admin/loans" 
               element={
-                <ProtectedRoute adminOnly={true}>
+                <ProtectedRoute requireAdmin={true}>
                   <AllLoans />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/register" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <RegisterUser />
                 </ProtectedRoute>
               } 
             />
             <Route 
               path="/admin/reports" 
               element={
-                <ProtectedRoute adminOnly={true}>
+                <ProtectedRoute requireAdmin={true}>
                   <ReportPage />
                 </ProtectedRoute>
               } 
             />
-            <Route 
-              path="/admin/register-user" 
-              element={
-                <ProtectedRoute adminOnly={true}>
-                  <RegisterUser />
-                </ProtectedRoute>
-              } 
-            />
+            
+            {/* Reindirizzamenti default */}
+            <Route path="/" element={<Navigate to="/books" replace />} />
+            <Route path="*" element={<Navigate to="/books" replace />} />
           </Routes>
           <Footer />
-        </BrowserRouter>
-      </ThemeProvider>
-    </AuthProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

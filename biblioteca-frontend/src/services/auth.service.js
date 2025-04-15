@@ -1,32 +1,30 @@
-import axios from 'axios';
-import authHeader from './auth-header';
+import api from './api.interceptor';
 
-const API_URL = 'http://localhost:8080/api/auth/';
-
-class AuthService {
-  login(email, password) {
-    return axios
-      .post(API_URL + 'login', { email, password })
-      .then(response => {
-        if (response.data.token) {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
-        }
+const authService = {
+  login: async (email, password) => {
+    try {
+      const response = await api.post('/auth/login', { email, password });
+      
+      if (response.data && response.data.token) {
+        localStorage.setItem('token', JSON.stringify(response.data.token));
         return response.data;
-      });
-  }
-
-  register(userData) {
-    return axios.post(
-      API_URL + 'register', 
-      userData,
-      { headers: authHeader() }
-    );
-  }
-
-  logout() {
+      } else {
+        console.error("Risposta di login senza token:", response.data);
+        throw new Error("Errore: risposta di login non valida");
+      }
+    } catch (error) {
+      console.error("Errore durante il login:", error);
+      throw error;
+    }
+  },
+  
+  logout: () => {
     localStorage.removeItem('token');
+  },
+  
+  register: async (userData) => {
+    return api.post('/auth/register', userData);
   }
-}
+};
 
-const authServiceInstance = new AuthService();
-export default authServiceInstance;
+export default authService;

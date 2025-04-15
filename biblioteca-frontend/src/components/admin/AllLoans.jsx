@@ -3,7 +3,7 @@ import {
   Container, Typography, Box, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, Paper, Chip,
   CircularProgress, Alert, TextField, InputAdornment,
-  Tabs, Tab, IconButton, Divider, MenuItem, Select, FormControl, InputLabel
+   MenuItem, Select, FormControl, InputLabel
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SortIcon from '@mui/icons-material/Sort';
@@ -60,7 +60,6 @@ const AllLoans = () => {
       return matchesSearch && matchesStatus;
     });
 
-    // Sort
     filtered = filtered.sort((a, b) => {
       let aValue, bValue;
       
@@ -102,10 +101,8 @@ const AllLoans = () => {
 
   const handleSort = (field) => {
     if (sortField === field) {
-      // Toggle direction if same field
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      // Default to descending for new field
       setSortField(field);
       setSortDirection('desc');
     }
@@ -124,7 +121,6 @@ const AllLoans = () => {
     if (loan.restituito) {
       return 'success';
     } else {
-      // Check if overdue
       const today = new Date();
       const endDate = new Date(loan.dataFine);
       return today > endDate ? 'error' : 'warning';
@@ -135,7 +131,6 @@ const AllLoans = () => {
     if (loan.restituito) {
       return 'Restituito';
     } else {
-      // Check if overdue
       const today = new Date();
       const endDate = new Date(loan.dataFine);
       return today > endDate ? 'In ritardo' : 'In prestito';

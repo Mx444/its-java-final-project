@@ -67,7 +67,6 @@ const LoansList = () => {
     });
   };
 
-  // Check if a loan is overdue
   const isOverdue = (loan) => {
     if (loan.restituito) return false;
     const today = new Date();
@@ -75,7 +74,6 @@ const LoansList = () => {
     return today > dueDate;
   };
 
-  // Calculate days remaining or days overdue
   const getDaysStatus = (loan) => {
     if (loan.restituito) return { days: 0, status: 'returned' };
     

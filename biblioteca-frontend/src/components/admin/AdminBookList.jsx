@@ -4,7 +4,7 @@ import {
   TableContainer, TableHead, TableRow, Paper, Button,
   CircularProgress, Alert, IconButton, Dialog, DialogTitle,
   DialogContent, DialogActions, TextField, InputAdornment,
-  Tooltip, Chip, Divider
+  Tooltip, Chip
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -101,7 +101,6 @@ const AdminBookList = () => {
         
         handleCloseForm();
         
-        // Auto-clear success message after 5 seconds
         setTimeout(() => setSuccess(''), 5000);
       } else {
         setError(response.data.message);
@@ -118,7 +117,6 @@ const AdminBookList = () => {
       if (response.data.success) {
         setSuccess('Libro eliminato con successo');
         fetchBooks();
-        // Auto-clear success message after 5 seconds
         setTimeout(() => setSuccess(''), 5000);
       } else {
         setError(response.data.message);

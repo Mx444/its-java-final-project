@@ -1,64 +1,48 @@
-import axios from 'axios';
-import authHeader from './auth-header';
+import api from './api.interceptor';
 
-const API_URL = 'http://localhost:8080/api/admin/';
-const API_URL_PUBLIC = "http://localhost:8080/api/user/";
-
-class AdminService {
-  getAllBooks() {
-    return axios.get(API_URL_PUBLIC + 'libri', { headers: authHeader() });
-  }
+const adminService = {
+  getAllBooks: async () => {
+    try {
+      const response = await api.get('/user/libri');
+      console.log("Admin books response:", response.data);
+      return response;
+    } catch (error) {
+      console.error("Error fetching admin books:", error);
+      throw error;
+    }
+  },
   
-  getAllLoans() {
-    return axios.get(API_URL + 'prestiti', { headers: authHeader() });
+  addBook: async (book) => {
+    try {
+      const response = await api.post('/admin/libri', book);
+      console.log("Add book response:", response.data);
+      return response;
+    } catch (error) {
+      console.error("Error adding book:", error);
+      throw error;
+    }
+  },
+  
+  updateBook: async (id, book) => {
+    return api.put(`/admin/libri/${id}`, book);
+  },
+  
+  deleteBook: async (id) => {
+    return api.delete(`/admin/libri/${id}`);
+  },
+  
+  getAllLoans: async () => {
+    return api.get('/admin/prestiti');
+  },
+  
+  // Aggiungi funzioni per report e registrazione
+  getBookReports: async () => {
+    return api.get('/admin/report/libri-piu-letti/');
+  },
+  
+  registerUser: async (userData) => {
+    return api.post('/admin/register', userData);
   }
+};
 
-  getBookReports() {
-    return axios.get(API_URL + 'report/libri-piu-letti', { headers: authHeader() });
-  }
-
-  addBook(book) {
-    const bookData = {
-      titolo: book.titolo,
-      autore: book.autore,
-      genere: book.genere,
-      annoDiPubblicazione: Number(book.annoDiPubblicazione),
-      copieDisponibili: Number(book.copieDisponibili)
-    };
-    
-    console.log('Adding new book:', bookData);
-    
-    return axios.post(API_URL + 'libri', bookData, { 
-      headers: {
-        ...authHeader(),
-        "Content-Type": "application/json"
-      }
-    });
-  }
-
-  updateBook(id, book) {
-    const bookData = {
-      titolo: book.titolo,
-      autore: book.autore,
-      genere: book.genere,
-      annoDiPubblicazione: Number(book.annoDiPubblicazione),
-      copieDisponibili: Number(book.copieDisponibili)
-    };
-    
-    console.log('Sending to backend:', bookData);
-    
-    return axios.put(API_URL + `libri/${id}`, bookData, { 
-      headers: {
-        ...authHeader(),
-        "Content-Type": "application/json"
-      }
-    });
-  }
-
-  deleteBook(id) {
-    return axios.delete(API_URL + `libri/${id}`, { headers: authHeader() });
-  }
-}
-
-const adminServiceInstance = new AdminService();
-export default adminServiceInstance;
+export default adminService;
