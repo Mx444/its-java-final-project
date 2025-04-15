@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.biblioteca.libri.entities.Libro;
 import com.biblioteca.utenti.entities.Utente;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "loans")
@@ -25,6 +26,7 @@ public class Prestito {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties("prestiti")
     private Utente utente;
 
     @ManyToOne

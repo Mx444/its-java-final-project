@@ -16,17 +16,17 @@ import com.biblioteca.security.JwtUtil;
 import com.biblioteca.utenti.repositories.UtenteRepository;
 
 @Service
-public class UtenteService {
-    private static final Logger logger = LoggerFactory.getLogger(UtenteService.class);
+public class AuthService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     @Autowired
-    private final UtenteRepository utentiRepository;
+    private final UtenteRepository utenteRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
 
-    public UtenteService(UtenteRepository utentiRepository, JwtUtil jwtUtil) {
-        this.utentiRepository = utentiRepository;
+    public AuthService(UtenteRepository utenteRepository, JwtUtil jwtUtil) {
+        this.utenteRepository = utenteRepository;
         this.jwtUtil = jwtUtil;
     }
 
@@ -35,12 +35,12 @@ public class UtenteService {
         ResponseDTO validationResponse = validateRegistrationData(utente);
         if (!validationResponse.isSuccess())
             return validationResponse;
-        if (utentiRepository.existsByEmail(utente.getEmail())) {
+        if (utenteRepository.existsByEmail(utente.getEmail())) {
             logger.warn("Email già esistente: " + utente.getEmail());
             return new ResponseDTO(false, "Email già esistente!");
         }
         try {
-            utentiRepository.save(utente);
+            utenteRepository.save(utente);
             logger.info("Registrazione avvenuta con successo per l'utente: " + utente.getNome());
             return new ResponseDTO(true, "Registrazione avvenuta con successo!");
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class UtenteService {
             return new ResponseDTO(false, "Dati di accesso incompleti");
         }
         try {
-            Utente utente = this.utentiRepository.findByEmail(loginDTO.email).orElse(null);
+            Utente utente = this.utenteRepository.findByEmail(loginDTO.email).orElse(null);
             if (utente == null) {
                 logger.warn("Email non esiste :", loginDTO.email);
                 return new ResponseDTO(false, "Credenziali errate!");

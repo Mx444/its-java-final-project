@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.*;
 import com.biblioteca.utenti.dtos.LoginDTO;
 import com.biblioteca.utenti.dtos.ResponseDTO;
 import com.biblioteca.utenti.entities.Utente;
-import com.biblioteca.utenti.providers.UtenteService;
+import com.biblioteca.utenti.providers.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
-    private UtenteService utenteService;
+    private AuthService authService;
 
     @PostMapping("/register")
     public ResponseDTO register(@RequestBody Utente utente) {
-        return this.utenteService.register(utente);
+        return this.authService.register(utente);
     }
 
     @PostMapping("/login")
     public ResponseDTO login(@RequestBody LoginDTO loginDTO) {
-        return this.utenteService.login(loginDTO);
+        return this.authService.login(loginDTO);
     }
 }

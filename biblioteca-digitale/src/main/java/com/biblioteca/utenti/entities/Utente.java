@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.biblioteca.prestiti.entities.Prestito;
 import com.biblioteca.utenti.entities.enums.Ruoli;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "users")
@@ -52,7 +53,8 @@ public class Utente {
     @Column(name = "deleted_at", nullable = true)
     private Date deletedAt;
 
-    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("utente")
     private List<Prestito> prestiti = new ArrayList<>();
 
     public Utente() {
@@ -154,6 +156,24 @@ public class Utente {
 
     public void setDeletedAt(Date deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public List<Prestito> getPrestiti() {
+        return prestiti;
+    }
+
+    public void setPrestiti(List<Prestito> prestiti) {
+        this.prestiti = prestiti;
+    }
+
+    public void addPrestito(Prestito prestito) {
+        prestiti.add(prestito);
+        prestito.setIdUtente(this);
+    }
+
+    public void removePrestito(Prestito prestito) {
+        prestiti.remove(prestito);
+        prestito.setIdUtente(null);
     }
 
     @Override

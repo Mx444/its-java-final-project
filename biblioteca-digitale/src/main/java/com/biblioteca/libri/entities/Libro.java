@@ -100,6 +100,16 @@ public class Libro {
         this.copieDisponibili = copieDisponibili;
     }
 
+    public void addPrestito(Prestito prestito) {
+        prestiti.add(prestito);
+        prestito.setIdLibro(this);
+    }
+
+    public void removePrestito(Prestito prestito) {
+        prestiti.remove(prestito);
+        prestito.setIdLibro(null);
+    }
+
     @Override
     public String toString() {
         return "Libro{" +
