@@ -13,6 +13,7 @@ import AdminBookList from './components/admin/AdminBookList';
 import AllLoans from './components/admin/AllLoans';
 import ReportPage from './components/admin/ReportPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
+import RegisterUser from './components/admin/RegisterUser';
 
 const theme = createTheme({
   palette: {
@@ -76,6 +77,14 @@ function App() {
               element={
                 <ProtectedRoute adminOnly={true}>
                   <ReportPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/register-user" 
+              element={
+                <ProtectedRoute adminOnly={true}>
+                  <RegisterUser />
                 </ProtectedRoute>
               } 
             />

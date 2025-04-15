@@ -76,6 +76,13 @@ const Navbar = () => {
                     >
                       Report
                     </Button>
+                    <Button 
+                      color="inherit" 
+                      component={Link} 
+                      to="/admin/register-user"
+                    >
+                      Registra Utente
+                    </Button>
                   </>
                 )}
               </>

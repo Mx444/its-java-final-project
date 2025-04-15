@@ -42,7 +42,7 @@ public class Utente {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Ruoli ruolo = Ruoli.ROLE_USER;
+    private Ruoli ruolo;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
