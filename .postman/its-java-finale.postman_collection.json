@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "b8da0124-9dbf-4dff-9623-c16efa5e0d7a",
+		"name": "its-java-finale",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37415066"
+	},
+	"item": [
+		{
+			"name": "api/auth/register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUB0ZXN0Lml0Iiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjozLCJleHAiOjE3NDQ3MDE1NjMsImlhdCI6MTc0NDY5Nzk2MywiZW1haWwiOiJ0ZXN0MUB0ZXN0Lml0In0.nMCwrAWndMvm6ZrIr6HXc2xjC7U9FtE6IWfjcPmHuG",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"nome\":\"Savelli\",\r\n\"email\":\"test2@test.it\",\r\n\"password\":\"test1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/auth/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\":\"test1@test.it\",\r\n\"password\":\"test1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/libri",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUB0ZXN0Lml0Iiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjozLCJleHAiOjE3NDQ3MDMxOTgsImlhdCI6MTc0NDY5OTU5OCwiZW1haWwiOiJ0ZXN0MUB0ZXN0Lml0In0.TYv_EnJXpDtXhty_blB9EVmYeo-80T_tjOLwVmI4pA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/user/libri",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"libri"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/prestiti",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUB0ZXN0Lml0Iiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjozLCJleHAiOjE3NDQ3MDM1MjAsImlhdCI6MTc0NDY5OTkyMCwiZW1haWwiOiJ0ZXN0MUB0ZXN0Lml0In0.EknKdDKRlGeQTSx3paRGHpRiDF8aT9XhVg4UOABU9Lo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "1",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/user/prestiti",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"prestiti"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/miei-prestiti",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUB0ZXN0Lml0Iiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjozLCJleHAiOjE3NDQ3MDQzNzksImlhdCI6MTc0NDcwMDc3OSwiZW1haWwiOiJ0ZXN0MUB0ZXN0Lml0In0.I1MfIq6JShRAOGaEwb7PcIG3JksMRydonzyS97BH99k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/user/miei-prestiti",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"miei-prestiti"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/restituisci/2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUB0ZXN0Lml0Iiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjozLCJleHAiOjE3NDQ3MDQzNzksImlhdCI6MTc0NDcwMDc3OSwiZW1haWwiOiJ0ZXN0MUB0ZXN0Lml0In0.I1MfIq6JShRAOGaEwb7PcIG3JksMRydonzyS97BH99k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/user/restituisci/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"restituisci",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/admin/libri",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuaXQiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjoxLCJleHAiOjE3NDQ3MDY4NDQsImlhdCI6MTc0NDcwMzI0NCwiZW1haWwiOiJ0ZXN0QHRlc3QuaXQifQ.1QDqgxbK_7uXCjEY9wZ1OHg2iPKdt2KV4-sO9BfuPq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titolo\": \"Il Nome della Rosa\",\r\n  \"autore\": \"Umberto Eco\",\r\n  \"genere\": \"Romanzo storico\",\r\n  \"annoDiPubblicazione\": \"1980-01-01\",\r\n  \"copieDisponibili\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/admin/libri",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"libri"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/admin/libri/21",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuaXQiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjoxLCJleHAiOjE3NDQ3MDY4NDQsImlhdCI6MTc0NDcwMzI0NCwiZW1haWwiOiJ0ZXN0QHRlc3QuaXQifQ.1QDqgxbK_7uXCjEY9wZ1OHg2iPKdt2KV4-sO9BfuPq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/admin/libri/21",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"libri",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/admin/prestiti",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuaXQiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjoxLCJleHAiOjE3NDQ3MDY4NDQsImlhdCI6MTc0NDcwMzI0NCwiZW1haWwiOiJ0ZXN0QHRlc3QuaXQifQ.1QDqgxbK_7uXCjEY9wZ1OHg2iPKdt2KV4-sO9BfuPq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/admin/prestiti",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"prestiti"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/admin/libri/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuaXQiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlkIjoxLCJleHAiOjE3NDQ3MDY4NDQsImlhdCI6MTc0NDcwMzI0NCwiZW1haWwiOiJ0ZXN0QHRlc3QuaXQifQ.1QDqgxbK_7uXCjEY9wZ1OHg2iPKdt2KV4-sO9BfuPq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titolo\": \"Il Nome della Rosa (Edizione Aggiornata)\",\r\n  \"autore\": \"Umberto Eco\",\r\n  \"genere\": \"Romanzo storico\",\r\n  \"disponibile\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/admin/libri/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"libri",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
