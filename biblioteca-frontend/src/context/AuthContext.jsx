@@ -65,6 +65,7 @@ export const AuthProvider = ({ children }) => {
           setCurrentUser({
             token: tokenStr,
             id: decodedToken.id,
+            name:decodedToken.name,
             email: decodedToken.email,
             role: decodedToken.role
           });

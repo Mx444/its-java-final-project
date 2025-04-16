@@ -122,7 +122,6 @@ public class AdminService {
         List<Prestito> tuttiPrestiti = prestitoRepository.findAll();
         logger.info("Generando statistiche dai {} prestiti recuperati", tuttiPrestiti.size());
 
-        // Count book occurrences and store book metadata
         Map<Long, Integer> conteggioLibri = new HashMap<>();
         Map<Long, String> titoliLibri = new HashMap<>();
         Map<Long, String> autoriLibri = new HashMap<>();

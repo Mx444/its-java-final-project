@@ -138,7 +138,7 @@ mvn spring-boot:run
 cd its-java-finale/biblioteca-frontend
 
 # Installa le dipendenze
-npm install --force
+npm install
 
 # Avvia l'applicazione frontend
 npm run start

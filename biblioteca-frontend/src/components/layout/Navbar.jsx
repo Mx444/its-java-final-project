@@ -210,7 +210,7 @@ const Navbar = () => {
                     fontWeight: 500,
                     mr: 1.5
                   }}>
-                    {currentUser.email && currentUser.email.split('@')[0]} -{' '}
+                    {currentUser.name} -{' '}
                     {currentUser.role === 'ROLE_ADMIN' ? 'Admin' : 'Utente'}
                   </Typography>
                   <IconButton
