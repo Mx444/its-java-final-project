@@ -126,8 +126,6 @@ its-java-finale/
 
 ### Backend
 ```bash
-# Clona il repository
-git clone https://github.com/tuonome/its-java-finale.git
 cd its-java-finale/biblioteca-backend
 
 # Compila e avvia il backend
@@ -140,7 +138,7 @@ mvn spring-boot:run
 cd its-java-finale/biblioteca-frontend
 
 # Installa le dipendenze
-npm install
+npm install --force
 
 # Avvia l'applicazione frontend
 npm run start

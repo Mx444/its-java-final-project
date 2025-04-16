@@ -1,7 +1,7 @@
 package com.biblioteca.security;
 
-import com.biblioteca.utenti.entities.Utente;
-import com.biblioteca.utenti.repositories.UtenteRepository;
+import com.biblioteca.models.Utente;
+import com.biblioteca.repositories.UtenteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

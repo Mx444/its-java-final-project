@@ -7,7 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.biblioteca.utenti.entities.Utente;
+import com.biblioteca.models.Utente;
 
 import java.util.Date;
 import java.util.HashMap;
