@@ -1,201 +1,163 @@
-# Biblioteca Digitale - Sistema di Gestione Biblioteca
+# Sistema di Gestione Biblioteca Digitale - ITS Steve Jobs Academy
 
+This repository contains a complete application for digital library management, developed as a final project for the course at ITS Steve Jobs Academy. The application consists of a Spring Boot backend and a React frontend, offering comprehensive functionality for managing books, loans, and users.
 
-Un sistema completo di gestione biblioteca con interfaccia utente React e backend Java Spring Boot, che permette agli utenti di sfogliare, cercare e prendere in prestito libri, e agli amministratori di gestire catalogo e monitorare prestiti.
+## Project Structure
 
-## 📋 Indice
+The project is organized into two main components:
 
-- Panoramica
-- Funzionalità
-- Struttura del Progetto
-- Stack Tecnologico
-- API Reference
-- Installazione
-- Screenshot
-- Note di Sviluppo
+- **biblioteca-backend**: RESTful API developed with Spring Boot
+  - User management and JWT authentication
+  - Complete CRUD for books and loans
+  - Reporting and statistics
 
-## 📚 Panoramica
+- **biblioteca-frontend**: User interface developed with React and Material-UI
+  - Dashboard for users and administrators
+  - Responsive book catalog management
+  - Loan and return system
 
-Biblioteca Digitale è un'applicazione web full-stack per la gestione di una biblioteca. Il sistema consente agli utenti di sfogliare il catalogo dei libri, effettuare ricerche, prendere in prestito e restituire libri. Gli amministratori hanno accesso a funzionalità di gestione come l'aggiunta, modifica ed eliminazione di libri, la visualizzazione di tutti i prestiti e l'analisi di report statistici.
+## Main Features
 
-## ✨ Funzionalità
+### For Users
+- View the complete book catalog
+- Search and filter available books
+- Request book loans
+- Manage personal loans
+- Return borrowed books
 
-### Funzionalità Utente
-- **Autenticazione**: Login sicuro con JWT
-- **Catalogo Libri**: Sfoglia il catalogo completo dei libri
-- **Ricerca**: Cerca libri per titolo, autore o genere
-- **Gestione Prestiti**: Prendi in prestito e restituisci libri
-- **Monitoraggio Prestiti**: Visualizza lo storico dei prestiti personali
+### For Administrators
+- Complete catalog management (add, edit, remove books)
+- Monitor all active loans
+- View statistical reports on most read books
+- Register new users
 
-### Funzionalità Amministratore
-- **Gestione Libri**: Aggiungi, modifica ed elimina libri dal catalogo
-- **Gestione Prestiti**: Visualizza e monitora tutti i prestiti della biblioteca
-- **Report Statistici**: Analizza dati sui libri più letti e l'andamento dei prestiti
-- **Gestione Utenti**: Registra nuovi utenti/amministratori
-
-## 🏗️ Struttura del Progetto
-
-```
-its-java-finale/
-├── biblioteca-backend/               # Backend Java Spring Boot
-│   ├── src/main/java/com/biblioteca/
-│   │   ├── config/                   # Configurazioni Spring e sicurezza
-│   │   ├── libri/                    # Entities, repositories, DTOs per libri
-│   │   ├── prestiti/                 # Entities, repositories, DTOs per prestiti
-│   │   ├── utenti/                   # Entities, controllers, providers per utenti
-│   │   └── BibliotecaDigitaleApplication.java  # Entry point
-│   └── resources/
-│       └── application.properties    # Configurazione applicazione e database
-│
-└── biblioteca-frontend/              # Frontend React
-    ├── public/                       # Asset pubblici
-    └── src/
-        ├── components/
-        │   ├── admin/                # Componenti per amministratori
-        │   │   ├── AdminBookList.jsx # Gestione libri
-        │   │   ├── AllLoans.jsx      # Visualizzazione prestiti
-        │   │   ├── BookForm.jsx      # Form per aggiunta/modifica libri
-        │   │   ├── RegisterUser.jsx  # Registrazione utenti
-        │   │   └── ReportPage.jsx    # Statistiche e report
-        │   ├── auth/                 # Componenti per autenticazione
-        │   ├── layout/               # Layout comuni (Navbar, Footer, ecc.)
-        │   └── user/                 # Componenti per utenti
-        │       ├── BookList.jsx      # Catalogo libri
-        │       ├── BorrowBookDialog.jsx # Dialog conferma prestito
-        │       └── LoansList.jsx     # Lista prestiti utente
-        ├── context/                  # Context API per stato globale
-        ├── services/                 # Servizi per chiamate API
-        └── App.jsx                   # Componente principale e routing
-```
-
-## 🛠️ Stack Tecnologico
+## Technologies Used
 
 ### Backend
-- **Linguaggio**: Java 17
-- **Framework**: Spring Boot 2.7.18
-- **Database**: PostgreSQL su Neon.tech
-- **ORM**: JPA/Hibernate
-- **Sicurezza**: Spring Security + JWT
-- **Build Tool**: Maven
+- **Spring Boot**: Application development framework
+- **Spring Security**: Authentication and authorization management
+- **Spring Data JPA**: Data access and persistence
+- **PostgreSQL**: Relational database
+- **JWT**: Authentication token management
 
 ### Frontend
-- **Linguaggio**: JavaScript (React 19.1.0)
-- **UI Framework**: Material-UI 7.0.2
-- **Routing**: React Router 7.5.0
-- **State Management**: React Context API
-- **HTTP Client**: Axios
-- **Visualizzazione Dati**: Chart.js 4.4.8
+- **React**: JavaScript library for user interface
+- **Material-UI**: React component framework
+- **Axios**: HTTP client for API calls
+- **React Router**: Navigation management
+- **Context API**: Application state management
 
-### Strumenti di Sviluppo
-- **IDE**: Visual Studio Code
-- **Testing API**: Postman
-- **Controllo Versione**: Git
+## System Requirements
 
-## 📡 API Reference
-
-### Autenticazione
-| Metodo | Endpoint | Descrizione |
-| ------ | -------- | ----------- |
-| POST | `/api/auth/register` | Registra un nuovo utente |
-| POST | `/api/auth/login` | Effettua login e riceve JWT token |
-
-### API Utente
-| Metodo | Endpoint | Descrizione |
-| ------ | -------- | ----------- |
-| GET | `/api/user/libri` | Ottiene tutti i libri disponibili |
-| POST | `/api/user/prestiti` | Prende in prestito un libro |
-| GET | `/api/user/miei-prestiti` | Ottiene i prestiti dell'utente corrente |
-| POST | `/api/user/restituisci/{id}` | Restituisce un libro in prestito |
-
-### API Amministratore
-| Metodo | Endpoint | Descrizione |
-| ------ | -------- | ----------- |
-| POST | `/api/admin/libri` | Aggiunge un nuovo libro |
-| PUT | `/api/admin/libri/{id}` | Aggiorna un libro esistente |
-| DELETE | `/api/admin/libri/{id}` | Elimina un libro |
-| GET | `/api/admin/prestiti` | Ottiene tutti i prestiti della biblioteca |
-| GET | `/api/admin/report/libri-piu-letti` | Ottiene statistiche sui libri più letti |
-
-## 🚀 Installazione
-
-### Prerequisiti
 - Java 17
-- Node.js e npm
-- PostgreSQL o accesso al database cloud
+- Node.js and npm
+- PostgreSQL or cloud database access
 - Maven
+
+## Installation and Launch
 
 ### Backend
 ```bash
-cd its-java-finale/biblioteca-backend
-
-# Compila e avvia il backend
+cd biblioteca-backend
 mvn spring-boot:run
 ```
 
 ### Frontend
 ```bash
-# In un altro terminale, naviga alla cartella frontend
-cd its-java-finale/biblioteca-frontend
+# In another terminal, navigate to the frontend folder
+cd biblioteca-frontend
 
-# Installa le dipendenze
+# Install dependencies
 npm install
 
-# Avvia l'applicazione frontend
+# Start the frontend application
 npm run start
 ```
 
-L'applicazione sarà disponibile su http://localhost:3000
+The application will be available at `http://localhost:3000`
 
-## 🖥️ Screenshot
+## Screenshots
 
-### Login (Utente)
+### Login (User)
 ![Login](https://i.ibb.co/mCC23X9H/Screenshot-2025-04-15-173020.png)
 
-### Pagina Catalogo Libri (Utente)
-![Catalogo Libri](https://i.ibb.co/CGP8VmS/Screenshot-2025-04-15-172857.png)
+### Book Catalog Page (User)
+![Book Catalog](https://i.ibb.co/CGP8VmS/Screenshot-2025-04-15-172857.png)
 
-### Gestione Prestiti (Utente)
-![I Miei Prestiti](https://i.ibb.co/LhXHV659/Screenshot-2025-04-15-172912.png)
+### Loan Management (User)
+![My Loans](https://i.ibb.co/LhXHV659/Screenshot-2025-04-15-172912.png)
 
-### Gestione Libri (Amministratore)
-![Gestione Libri](https://i.ibb.co/Hf3xMQfk/Screenshot-2025-04-15-172923.png)
+### Book Management (Administrator)
+![Book Management](https://i.ibb.co/Hf3xMQfk/Screenshot-2025-04-15-172923.png)
 
-### Report Statistici (Amministratore)
-![Report Statistici](https://i.ibb.co/s9sgtdRF/Screenshot-2025-04-15-173004.png)
+### Statistical Reports (Administrator)
+![Statistical Reports](https://i.ibb.co/s9sgtdRF/Screenshot-2025-04-15-173004.png)
 
-### Registra Utente (Amministratore)
-![Registra Utente](https://i.ibb.co/r2qV7qhL/Screenshot-2025-04-15-173013.png)
+### Register User (Administrator)
+![Register User](https://i.ibb.co/r2qV7qhL/Screenshot-2025-04-15-173013.png)
 
-## 📝 Note di Sviluppo
+## Data Models
 
-### Modello Dati
-- **Utenti (users)**: Informazioni utente con ruoli (utente o amministratore)
-- **Libri (books)**: Dettagli sui libri con titolo, autore, genere, anno e disponibilità
-- **Prestiti (loans)**: Relazioni tra utenti e libri con date di inizio, fine e restituzione
+### Book
+- ID
+- Title
+- Author
+- Genre
+- Publication Year
+- Available Copies
 
-### Sicurezza
-- Autenticazione basata su JWT con scadenza token
-- Ruoli distinti per utenti e amministratori
-- Password criptate con BCrypt
+### Loan
+- ID
+- Start Date
+- End Date
+- Return Date
+- Return Status
+- Book Reference
+- User Reference
+
+### User
+- ID
+- Name
+- Email
+- Password (encrypted)
+- Role (USER/ADMIN)
+
+## Security
+
+The application implements a JWT-based authentication system with:
+- Authentication tokens with configurable expiration
+- Differentiated roles and permissions
+- Protection of sensitive endpoints
+- Input data validation
+- Passwords encrypted with BCrypt
+
+## Development Notes
+
+### Data Model
+- **Users**: User information with roles (user or administrator)
+- **Books**: Book details with title, author, genre, year, and availability
+- **Loans**: Relationships between users and books with start, end, and return dates
+
+### Security
+- JWT-based authentication with token expiration
+- Distinct roles for users and administrators
+- Passwords encrypted with BCrypt
 
 ### UI/UX
-- Design responsive compatibile con dispositivi mobili e desktop
-- Tema personalizzato con colori primari e secondari coerenti
-- Componenti interattivi con feedback visivo (hover, animazioni, ecc.)
-- Messaggi di errore e successo chiari per le operazioni
+- Responsive design compatible with mobile and desktop devices
+- Custom theme with consistent primary and secondary colors
+- Interactive components with visual feedback (hover, animations, etc.)
+- Clear error and success messages for operations
 
-### Gestione Stato
-- Utilizzo di React Context API per gestire lo stato dell'autenticazione
-- Gestione locale dello stato nei componenti per dati specifici
-- Chiamate API centralizzate nei servizi per riutilizzo del codice
+### State Management
+- Use of React Context API to manage authentication state
+- Local state management in components for specific data
+- Centralized API calls in services for code reuse
 
-### Best Practices Implementate
-- Validazione input lato client e server
-- Gestione errori completa con feedback utente
-- Separazione delle preoccupazioni (SoC) con architettura a componenti
-- Codice DRY (Don't Repeat Yourself) con componenti riutilizzabili
-- Design pattern RESTful per le API
+### Implemented Best Practices
+- Client and server-side input validation
+- Complete error handling with user feedback
 
 ---
 
-Progetto sviluppato come esame finale per il corso di Java Developer presso ITS.
+*This repository was created as part of the educational journey at ITS Steve Jobs Academy.*
