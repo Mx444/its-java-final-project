@@ -1,4 +1,4 @@
-# Sistema di Gestione Biblioteca Digitale - ITS Steve Jobs Academy
+# Digital Library Management - ITS Steve Jobs Academy
 
 This repository contains a complete application for digital library management, developed as a final project for the course at ITS Steve Jobs Academy. The application consists of a Spring Boot backend and a React frontend, offering comprehensive functionality for managing books, loans, and users.
 
